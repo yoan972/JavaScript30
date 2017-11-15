@@ -24,6 +24,7 @@
     .panels {
       min-height:100vh;
       overflow: hidden;
+      display: flex;
     }
 
     .panel {
@@ -41,6 +42,10 @@
       font-size: 20px;
       background-size:cover;
       background-position:center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
 
 
@@ -55,7 +60,12 @@
       width: 100%;
       transition:transform 0.5s;
     }
-
+    .panel > p:first-child{
+    	transform: translateY(-200px);
+    }
+    .panel > p:last-child{
+    	transform: translateY(200px);
+    }
     .panel p {
       text-transform: uppercase;
       font-family: 'Amatic SC', cursive;
@@ -65,9 +75,12 @@
     .panel p:nth-child(2) {
       font-size: 4em;
     }
-
-    .panel.open {
+    .panel--active > p:nth-child(2n+1){
+    	transform: translateY(0);
+    }
+    .panel--open {
       font-size:40px;
+      flex-grow: 4;
     }
 
   </style>
@@ -102,6 +115,22 @@
   </div>
 
   <script>
+  	const panels = document.querySelectorAll('.panel')
+  	
+
+  	togglePanel = () => {
+		const panel = event.target
+		if (panel.nodeName == 'DIV'){
+			panel.classList.toggle("panel--open")
+			panel.classList.toggle("panel--active")
+			event.stopPropagation()
+		}
+		
+  	} 
+
+  	panels.forEach(panel => panel.addEventListener('click',togglePanel))
+
+  	console.log(panels)
 
   </script>
 
